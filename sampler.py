@@ -76,7 +76,19 @@ if args.number:
 	else:
 		# lines are grouped
 		if group_size:
-			pass #fill in later
+			for line in grouper(group_size, file):
+				if line_num < N:
+					line_storage.append(line)
+				else:
+					j = random.randint(0,line_num)
+					if j < N:
+						line_storage[j] = line
+					else:
+						pass
+				line_num += 1
+			for line in line_storage:
+				print ''.join(line)[:-1]
+
 		# lines are not grouped
 		else:
 			for line in file:
@@ -89,9 +101,8 @@ if args.number:
 					else:
 						pass
 				line_num += 1
-		for line in line_storage:
-			print line
-
+			for line in line_storage:
+				print line 
 
 
 # if user asks for P percent lines to be returned:
@@ -146,7 +157,5 @@ else:
 
 
 
-for line in line_storage:
-	print line
 
 
