@@ -48,12 +48,12 @@ def returnLine(line, P):
 		return
 
 # function to batch lines together in n groups
-def grouper(g, iterable, fillvalue=None):
-	args = [iter(iterable)] * g
+def grouper(group_size, iterable, fillvalue=None):
+	args = [iter(iterable)] * group_size
 	return itertools.izip_longest(fillvalue=fillvalue, *args)
 
 
-def groupReservoir(group_size, file, N):
+def groupReservoir(group_size, file):
 	storage = list()
 	line_num = 0
 	for line in grouper(group_size, file):
@@ -86,20 +86,8 @@ if args.number:
 				# after printing header, then print the randomly 
 				# selected groups
 				else:
-					for line in grouper(group_size, file):
-						if line_num < N:
-							line_storage.append(line)
-						else:
-							j = random.randint(0,line_num)
-							if j < N:
-								line_storage[j] = line
-							else:
-								pass
-						line_num += 1
-					for line in line_storage:
-						print ''.join(line)[:-1]
-
-
+					for line in groupReservoir(group_size, file):
+						print line 
 		# lines are not grouped
 		else:
 			pass #fill in later
@@ -107,7 +95,7 @@ if args.number:
 	else:
 		# lines are grouped
 		if group_size:
-			for line in groupReservoir(group_size, file, N):
+			for line in groupReservoir(group_size, file):
 				print ''.join(line)[:-1]
 		# lines are not grouped
 		else:
