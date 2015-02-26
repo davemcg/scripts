@@ -1,20 +1,16 @@
 #!/usr/bin/env python2.7
 
 """
-Randomly samples text files and returns N% of the lines
+Randomly samples text files and returns P% of the lines
 
 Can be set to always return the header (of x lines)
 
-Can also be set to pick N% of y set of lines
+Can also be set to pick P% of y set of lines
 	e.g.	fastq files have four lines per set of sequence
 			so you would want to pick N% of the quartet
 
-Random sampling could be used to select exactly N lines 
-but this is dangerous because this requires the entire
-file to be held in memory for the sort. Hence the simpler
-approach, which is to return (with exceptions above)
-N% of any given line
-
+Also can be run to select N total lines. Modifications 
+for header and groups the same as above. 
 """
 
 import argparse, random, itertools
@@ -57,6 +53,18 @@ def grouper(g, iterable, fillvalue=None):
 	return itertools.izip_longest(fillvalue=fillvalue, *args)
 
 
+def groupReservoir(line):
+	if line_num < N:
+		line_storage.append(line)
+	else:
+		j = random.randint(0,line_num)
+		if j < N:
+			line_storage[j] = line
+		else:
+			pass
+		line_num += 1
+	for line in line_storage:
+		print ''.join(line)[:-1]
 
 
 
@@ -68,7 +76,29 @@ if args.number:
 	if args.header >=1:
 		# lines are grouped
 		if group_size:
-			pass #fill in later
+			line_count = 0	
+			for line in file:	
+				# print header
+				if line_count < header_lines:		
+					print line[:-1]
+					line_count += 1
+				# after printing header, then print the randomly 
+				# selected groups
+				else:
+					for line in grouper(group_size, file):
+						if line_num < N:
+							line_storage.append(line)
+						else:
+							j = random.randint(0,line_num)
+							if j < N:
+								line_storage[j] = line
+							else:
+								pass
+						line_num += 1
+					for line in line_storage:
+						print ''.join(line)[:-1]
+
+
 		# lines are not grouped
 		else:
 			pass #fill in later
