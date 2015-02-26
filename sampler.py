@@ -53,19 +53,20 @@ def grouper(g, iterable, fillvalue=None):
 	return itertools.izip_longest(fillvalue=fillvalue, *args)
 
 
-def groupReservoir(line):
-	if line_num < N:
-		line_storage.append(line)
-	else:
-		j = random.randint(0,line_num)
-		if j < N:
-			line_storage[j] = line
+def groupReservoir(group_size, file, N):
+	storage = list()
+	line_num = 0
+	for line in grouper(group_size, file):
+		if line_num < N:
+			storage.append(line)
 		else:
-			pass
+			j = random.randint(0,line_num)
+			if j < N:
+				storage[j] = line
 		line_num += 1
-	for line in line_storage:
-		print ''.join(line)[:-1]
-
+	return storage
+#	for line in line_storage:
+#		print ''.join(line)[:-1]
 
 
 # if user asks for N lines to be returned:
@@ -106,19 +107,8 @@ if args.number:
 	else:
 		# lines are grouped
 		if group_size:
-			for line in grouper(group_size, file):
-				if line_num < N:
-					line_storage.append(line)
-				else:
-					j = random.randint(0,line_num)
-					if j < N:
-						line_storage[j] = line
-					else:
-						pass
-				line_num += 1
-			for line in line_storage:
+			for line in groupReservoir(group_size, file, N):
 				print ''.join(line)[:-1]
-
 		# lines are not grouped
 		else:
 			for line in file:
