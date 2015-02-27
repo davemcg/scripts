@@ -69,25 +69,24 @@ def groupReservoir(group_size, file):
 #		print ''.join(line)[:-1]
 
 
+if args.header >=1:
+	line_count = 0
+	for line in file:		
+		# print header
+		if line_count < header_lines:		
+			print line[:-1], "header"
+			line_count += 1
+
 # if user asks for N lines to be returned:
-if args.number:
+elif args.number:
 	line_storage = list()
 	line_num = 0
 	# header is present
 	if args.header >=1:
 		# lines are grouped
 		if group_size:
-			line_count = 0	
-			for line in file:	
-				# print header
-				if line_count < header_lines:		
-					print line[:-1]
-					line_count += 1
-				# after printing header, then print the randomly 
-				# selected groups
-				else:
-					for line in groupReservoir(group_size, file):
-						print line 
+			for line in groupReservoir(group_size, itertools.islice(file,header_lines,None)):
+				print line 
 		# lines are not grouped
 		else:
 			pass #fill in later
@@ -114,7 +113,7 @@ if args.number:
 
 
 # if user asks for P percent lines to be returned:
-else:
+elif args.number == False:
 	# if there is a header
 	if args.header >= 1:
 		# lines are being grouped
