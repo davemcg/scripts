@@ -38,9 +38,9 @@ parser.add_argument("--input", type=argparse.FileType("r"), default = "-", help 
 group = parser.add_mutually_exclusive_group()
 
 group.add_argument("-p","--percent", help= "P percent lines to sample in the file, \
-					may not be used with -n.", type=int, default = 1)
+					may not be used with -n.", type=float, default = 1)
 group.add_argument("-n","--number", help="N number of lines to sample in the file, \
-					may not be used with -p.", type=int)
+					may not be used with -p.", type=float)
 parser.add_argument("-head","--header", help="How many header lines to return.",
 					type=int)
 parser.add_argument("-g", "--group", help="Return random lines in groups. Useful \
