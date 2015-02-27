@@ -42,7 +42,7 @@ group_size = args.group
 # function to print or not print a line randomly
 def returnLine(line, P):
 	if random.randrange(0,100) < P:
-		print line[:-1]
+		print line[:-1], "returnLine"
 		return
 	else:
 		return
@@ -65,16 +65,18 @@ def groupReservoir(group_size, file):
 				storage[j] = line
 		line_num += 1
 	return storage
-#	for line in line_storage:
-#		print ''.join(line)[:-1]
+#	for line in storage:
+#		print ''.join(line)[:-1], "groupReservoir"
 
 # print header, if present
-line_num = 0
-for line in file:
-	if line_num < header_lines:
-		print line[:-1], "header"
-		line_num += 1
-	break
+def headerP():
+	line_num = 0
+	for line in file:
+		if line_num < header_lines:
+			print line[:-1], "header"
+			line_num += 1
+		else:
+			break
 
 # if user asks for N lines to be returned:
 if args.number:
@@ -82,10 +84,11 @@ if args.number:
 	line_num = 0
 	# header is present
 	if args.header >=1:
+		headerP()
 		# lines are grouped
 		if group_size:
 			for line in groupReservoir(group_size, itertools.islice(file,header_lines-1,None)):
-				print line 
+				print ''.join(line)[:-1]
 		# lines are not grouped
 		else:
 			pass #fill in later
@@ -117,22 +120,13 @@ else:
 	if args.header >= 1:
 		# lines are being grouped
 		if group_size:									
-			for line in grouper(group_size, file):
+			for line in grouper(group_size, itertools.islice(file,header_lines-1,None)):
 				if random.randrange(0,100) < P:
-					print ''.join(line)[:-1]
-				else:
-					continue		
+					print ''.join(line)[:-1], "grouper"
 		# grouping is not specified
 		else:
-			line_count = 0	
-			for line in file:
-				# again, print header
-				if line_count <= header_lines:
-					print line[:-1]
-					line_count += 1
-				# after header, print random lines
-				else:
-			returnLine(line, P)
+			for line in itertools.islice(file,header_lines-4,None):
+				returnLine(line, P)
 	
 	# no header present
 	else:
@@ -140,8 +134,6 @@ else:
 			for line in grouper(group_size, file):
 				if random.randrange(0,100) < P:
 					print ''.join(line)[:-1]
-				else:
-					continue
 		else:							#grouping is not specified
 			for line in file:
 				returnLine(line, P)
