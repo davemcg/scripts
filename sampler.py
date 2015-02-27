@@ -42,7 +42,7 @@ group_size = args.group
 # function to print or not print a line randomly
 def returnLine(line, P):
 	if random.randrange(0,100) < P:
-		print line[:-1], "returnLine"
+		print line[:-1]
 		return
 	else:
 		return
@@ -52,7 +52,7 @@ def grouper(group_size, iterable, fillvalue=None):
 	args = [iter(iterable)] * group_size
 	return itertools.izip_longest(fillvalue=fillvalue, *args)
 
-
+# returns N selected groups
 def groupReservoir(group_size, file):
 	storage = list()
 	line_num = 0
@@ -65,15 +65,13 @@ def groupReservoir(group_size, file):
 				storage[j] = line
 		line_num += 1
 	return storage
-#	for line in storage:
-#		print ''.join(line)[:-1], "groupReservoir"
 
 # print header, if present
 def headerP():
 	line_num = 0
 	for line in file:
 		if line_num < header_lines:
-			print line[:-1], "header"
+			print line[:-1]
 			line_num += 1
 		else:
 			break
@@ -87,20 +85,12 @@ if args.number:
 		headerP()
 		# lines are grouped
 		if group_size:
-			for line in groupReservoir(group_size, itertools.islice(file,header_lines-1,None)):
+			for line in groupReservoir(group_size, 
+				itertools.islice(file,header_lines-1,None)):
 				print ''.join(line)[:-1]
-		# lines are not grouped
+		# lines are not grouped.Algorithm R
 		else:
-			pass #fill in later
-	# no header
-	else:
-		# lines are grouped
-		if group_size:
-			for line in groupReservoir(group_size, file):
-				print ''.join(line)[:-1]
-		# lines are not grouped
-		else:
-			for line in file:
+			for line in itertools.islice(file,header_lines-1,None):
 				if line_num < N:
 					line_storage.append(line[:-1])
 				else:
@@ -112,39 +102,48 @@ if args.number:
 				line_num += 1
 			for line in line_storage:
 				print line 
-
-
-# if user asks for P percent lines to be returned:
-else:
-	# if there is a header
-	if args.header >= 1:
-		# lines are being grouped
-		if group_size:									
-			for line in grouper(group_size, itertools.islice(file,header_lines-1,None)):
-				if random.randrange(0,100) < P:
-					print ''.join(line)[:-1], "grouper"
-		# grouping is not specified
-		else:
-			for line in itertools.islice(file,header_lines-4,None):
-				returnLine(line, P)
-	
-	# no header present
+	# no header, lines are grouped
+	elif group_size:
+		for line in groupReservoir(group_size, file):
+			print ''.join(line)[:-1]
+	# no header, lines are not grouped. Algorithm R
 	else:
-		if group_size:						#if grouping is specified
-			for line in grouper(group_size, file):
-				if random.randrange(0,100) < P:
-					print ''.join(line)[:-1]
-		else:							#grouping is not specified
-			for line in file:
+		for line in file:
+			if line_num < N:
+				line_storage.append(line[:-1])
+			else:
+				j = random.randint(0,line_num)
+				if j < N:
+					line_storage[j] = line[:-1]
+				else:
+					pass
+			line_num += 1
+		for line in line_storage:
+			print line 
+
+
+# if user asks for P percent lines to be returned and there is a header
+elif args.header >=1:
+	headerP()
+	# lines are being grouped
+	if group_size:									
+		for line in grouper(group_size, 
+			itertools.islice(file,header_lines-1,None)):
+			if random.randrange(0,100) < P:
+				print ''.join(line)[:-1], "grouper"
+	# grouping is not specified
+	else:
+		for line in itertools.islice(file,header_lines-1,None):
 				returnLine(line, P)
 	
-
-
-
-
-
-
-
-
-
+# no header present, grouping
+elif group_size:
+	for line in grouper(group_size, file):
+		if random.randrange(0,100) < P:
+			print ''.join(line)[:-1]
+# no header, no grouping
+else:	
+	for line in file:
+		returnLine(line, P)
+	
 
