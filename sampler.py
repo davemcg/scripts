@@ -68,24 +68,23 @@ def groupReservoir(group_size, file):
 #	for line in line_storage:
 #		print ''.join(line)[:-1]
 
-
-if args.header >=1:
-	line_count = 0
-	for line in file:		
-		# print header
-		if line_count < header_lines:		
-			print line[:-1], "header"
-			line_count += 1
+# print header, if present
+line_num = 0
+for line in file:
+	if line_num < header_lines:
+		print line[:-1], "header"
+		line_num += 1
+	break
 
 # if user asks for N lines to be returned:
-elif args.number:
+if args.number:
 	line_storage = list()
 	line_num = 0
 	# header is present
 	if args.header >=1:
 		# lines are grouped
 		if group_size:
-			for line in groupReservoir(group_size, itertools.islice(file,header_lines,None)):
+			for line in groupReservoir(group_size, itertools.islice(file,header_lines-1,None)):
 				print line 
 		# lines are not grouped
 		else:
@@ -113,25 +112,16 @@ elif args.number:
 
 
 # if user asks for P percent lines to be returned:
-elif args.number == False:
+else:
 	# if there is a header
 	if args.header >= 1:
 		# lines are being grouped
 		if group_size:									
-			line_count = 0	
-			for line in file:	
-				# print header
-				if line_count < header_lines:		
-					print line[:-1]
-					line_count += 1
-				# after printing header, then print the randomly 
-				# selected groups
+			for line in grouper(group_size, file):
+				if random.randrange(0,100) < P:
+					print ''.join(line)[:-1]
 				else:
-					for line in grouper(group_size, file):
-						if random.randrange(0,100) < P:
-							print ''.join(line)[:-1]
-						else:
-							continue		
+					continue		
 		# grouping is not specified
 		else:
 			line_count = 0	
@@ -142,7 +132,7 @@ elif args.number == False:
 					line_count += 1
 				# after header, print random lines
 				else:
-					returnLine(line, P)
+			returnLine(line, P)
 	
 	# no header present
 	else:
