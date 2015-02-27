@@ -46,7 +46,7 @@ parser.add_argument("-head","--header", help="How many header lines to return.",
 parser.add_argument("-g", "--group", help="Return random lines in groups. Useful \
 					for when lines are grouped sequentially, e.g. fastq files.",
 					type=int)
-parser.add_argument("-r", "--random", help="Give seed for random.seed. Use when you \
+parser.add_argument("-s", "--seed", help="Give seed for random.seed. Use when you \
 					want to get consistent results. Very useful for when you are \
 					sampling paired fasta/q files. Default is system time.", 
 					default=None)
