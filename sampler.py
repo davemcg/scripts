@@ -9,7 +9,7 @@ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Ge
 details at http://www.gnu.org/licenses/.
 name: sampler.py
 date: Feb-27-2015
-version: 1.0
+version: 1.1
 author: David M. McGaughey
 email: mcgaugheyd@nih.gov
 institute: Medical Genomics and Metabolis Genetics, Division of Intramural Research,
