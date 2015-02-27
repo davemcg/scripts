@@ -1,16 +1,27 @@
 #!/usr/bin/env python2.7
 
 """
-Randomly samples text files and returns P% of the lines
-
-Can be set to always return the header (of x lines)
-
-Can also be set to pick P% of y set of lines
-	e.g.	fastq files have four lines per set of sequence
-			so you would want to pick N% of the quartet
-
-Also can be run to select N total lines. Modifications 
-for header and groups the same as above. 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation, version 2 of the License (GPLv2).
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+details at http://www.gnu.org/licenses/.
+name: sampler.py
+date: Feb-27-2015
+version: 1.0
+author: David M. McGaughey
+email: mcgaugheyd@nih.gov
+institute: Medical Genomics and Metabolis Genetics, Division of Intramural Research,
+           National Human Genome Research Institute, National Institutes of Health
+           Bethesda, MD
+repository: https://github.com/davemcg/scripts
+© license: Gnu General Public License, Version 2.0 (http://www.gnu.org/licenses/gpl.html)
+derivative work: No
+Description:
+Takes in text files (via pipe or --input) and returns either a P% of lines or N total lines. Has options to group
+together lines, preserve a header of user defined length, and fix Python2.7's random.seed(). For more information
+run this following command in your terminal:
+    python ./sampler.py -h
 """
 
 import argparse, random, itertools
