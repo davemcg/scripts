@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+# -*- coding: utf-8 -*-
 
 """
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
@@ -33,9 +34,12 @@ parser = argparse.ArgumentParser(description="Randomly sample lines (or groups o
 								input) are given, it will return 1 percent of lines.")
 parser.add_argument("--input", type=argparse.FileType("r"), default = "-", help = \
 					"Input file. Can also take input from pipe.")
-parser.add_argument("-p","--percent", help= "P percent lines to sample in the file, \
+
+group = parser.add_mutually_exclusive_group()
+
+group.add_argument("-p","--percent", help= "P percent lines to sample in the file, \
 					may not be used with -n.", type=int, default = 1)
-parser.add_argument("-n","--number", help="N number of lines to sample in the file, \
+group.add_argument("-n","--number", help="N number of lines to sample in the file, \
 					may not be used with -p.", type=int)
 parser.add_argument("-head","--header", help="How many header lines to return.",
 					type=int)
