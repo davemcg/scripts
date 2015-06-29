@@ -20,7 +20,6 @@ for line in args.list:
 	lines_to_return.append(line[:-1])
 
 current_line = 1
-
 for line in args.input:
 	if str(current_line) in lines_to_return:
 		print line[:-1]
