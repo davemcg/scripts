@@ -6,6 +6,8 @@ by line that contain non  A C G T N
 characters and returns the line number and line
 
 2015-07-30
+
+usage: python checkForNonACGTN.py sequences.fasta > bad_lines.txt
 """
 
 import fileinput
