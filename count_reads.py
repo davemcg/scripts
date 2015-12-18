@@ -8,24 +8,31 @@ def process(samtools_input):
 	line = samtools_input
 	reads = line[4]
 	reads = reads.lower()
-	ref = line[2]
+	reference = line[2]
 
 	if reference == 'a':
 		a = str(reads.count('.') + reads.count(','))
-	else:
-		a = str(reads.count('a'))
-	if reference == 'c':
-		c = str(reads.count('.') + reads.count(','))
-	else:
 		c = str(reads.count('c'))
-	if reference == 'g':
-		g = str(reads.count('.') + reads.count(','))
-	else:
 		g = str(reads.count('g'))
-	if reference == 't':
+		t = str(reads.count('t'))
+	elif reference == 'c':
+		a = str(reads.count('a'))
+		c = str(reads.count('.') + reads.count(','))
+		g = str(reads.count('g'))
+		t = str(reads.count('t'))
+	elif reference == 'g':
+		a = str(reads.count('a'))
+		c = str(reads.count('c'))
+		g = str(reads.count('.') + reads.count(','))
+		t = str(reads.count('t'))
+	elif reference == 't':
+		a = str(reads.count('a'))
+		c = str(reads.count('c'))
+		g = str(reads.count('g'))
 		t = str(reads.count('.') + reads.count(','))
 	else:
-		t = str(reads.count('t'))
+		print("Reference is",reference,"!")
+		break
 	counts = '\t'.join([a,c,g,t])
 	return(counts)
 
