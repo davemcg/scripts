@@ -8,7 +8,7 @@ def process(samtools_input):
 	line = samtools_input
 	reads = line[4]
 	reads = reads.lower()
-	reference = line[2]
+	reference = line[2].lower()
 
 	if reference == 'a':
 		a = str(reads.count('.') + reads.count(','))
@@ -32,7 +32,6 @@ def process(samtools_input):
 		t = str(reads.count('.') + reads.count(','))
 	else:
 		print("Reference is",reference,"!")
-		break
 	counts = '\t'.join([a,c,g,t])
 	return(counts)
 
