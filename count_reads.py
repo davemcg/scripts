@@ -20,8 +20,7 @@ def process(samtools_output):
 	Currently only tested when fed a single line 
 	"""
 	line = samtools_output
-	reads = line[4]
-	reads = reads.lower()
+	reads = line[4].lower()
 	reference = line[2].lower()
 
 	if reference == 'a':
