@@ -5,21 +5,21 @@ import sys
 import subprocess
 
 def run_samtools(bamfile, region):
-	samtools_input = 'samtools mpileup -r' + region + 
-		"-f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta" + 
+	samtools_input = 'samtools mpileup -r ' + region + 
+		' -f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta ' + 
 		bamfile 
 
 	samtools_view = (subprocess.check_output(samtools_input, shell=True)).decode('utf-8')
 	return(samtools_view)
 
-def process(samtools_input):
+def process(samtools_output):
 	"""
-	Takes input from samtools mpileup (requires reference) and counts
+	Takes output from samtools mpileup (requires reference) and counts
 	numbers of A, C, G, T in pileup. 
 	
 	Currently only tested when fed a single line 
 	"""
-	line = samtools_input
+	line = samtools_output
 	reads = line[4]
 	reads = reads.lower()
 	reference = line[2].lower()
