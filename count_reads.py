@@ -49,10 +49,9 @@ def process(samtools_output):
 	return(counts)
 
 def main():
-	for line in sys.stdin:
-		line = line.split()
-	#	print("chr","position","Reference","ReadCoverage","A","C","G","T")
-		samtools_return = run_samtools(sys.argv[1],sys.argv[2])
-		print(line[0],line[1],line[2],line[3],process(samtools_return))
+	print("chr","position","Reference","ReadCoverage","A","C","G","T")
+	samtools_return = run_samtools(sys.argv[1],sys.argv[2])
+	line = samtools_return.split()
+	print(line[0],[1],line[2],line[3],process(samtools_return))
 
 main()
