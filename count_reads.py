@@ -6,7 +6,9 @@ import subprocess
 
 def run_samtools(bamfile, region):
 	region = str(region)
-	samtools_input = 'samtools mpileup -r ' + region + ' -f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta ' + 	bamfile 
+	samtools_input = 'samtools mpileup -r ' + region + \
+		' -f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta ' + \
+		bamfile
 
 	samtools_view = (subprocess.check_output(samtools_input, shell=True)).decode('utf-8')
 	return(samtools_view)
