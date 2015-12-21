@@ -5,9 +5,8 @@ import sys
 import subprocess
 
 def run_samtools(bamfile, region):
-	samtools_input = 'samtools mpileup -r ' + region + 
-		' -f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta ' + 
-		bamfile 
+	region = str(region)
+	samtools_input = 'samtools mpileup -r ' + region + ' -f /fdb/GATK_resource_bundle/hg19-2.8/ucsc.hg19.fasta ' + 	bamfile 
 
 	samtools_view = (subprocess.check_output(samtools_input, shell=True)).decode('utf-8')
 	return(samtools_view)
@@ -49,9 +48,9 @@ def process(samtools_output):
 	return(counts)
 
 def main():
-	print("chr","position","Reference","ReadCoverage","A","C","G","T")
 	samtools_return = run_samtools(sys.argv[1],sys.argv[2])
 	line = samtools_return.split()
-	print(line[0],[1],line[2],line[3],process(samtools_return))
+	print("chr","position","Reference","ReadCoverage","A","C","G","T")
+	print(line[0],line[1],line[2].upper(),line[3],process(line))
 
 main()
