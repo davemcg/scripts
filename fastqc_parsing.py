@@ -25,7 +25,7 @@ else:
 	zips = glob.glob('*.zip')
 
 #unzips the fastqc data
-#[subprocess.call("unzip " + i, shell=True) for i in zips]
+[subprocess.call("unzip " + i, shell=True) for i in zips]
 
 # roll through dirs and parse data 
 for i in zips:
