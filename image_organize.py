@@ -16,12 +16,14 @@ parser.add_argument('--pattern', nargs='?', default="D*.ARW", help =\
 	"Give pattern to identify files to move. Default is \"D.*ARW\"")
 parser.add_argument('--prepend', nargs='?', default="", help =\
 	"Prepend to each file. Default is nothing.")
-
+parser.add_argument('--filetype', nargs='?', default="ARW", help =\
+	"Give file ending for exiftool to process. Default is ARW.")
 args = parser.parse_args()
 
 directory_path = args.directory
 pattern = args.pattern
 prepend = args.prepend
+filetype = args.filetype
 
 path_file = directory_path + '/' + pattern
 file_matches = glob.glob(path_file)
@@ -36,7 +38,7 @@ for image_file in file_matches:
 
 # call exiftool to move files to directory (YYYY-MM-DD)
 # based on image capture data exif field
-exiftool_command = 'exiftool \"-Directory<DateTimeOriginal\" -d \"%Y-%m-%d\" ' + directory_path
+exiftool_command = 'exiftool \"-Directory<DateTimeOriginal\" -d \"%Y-%m-%d\" -P -ext ' + filetype + ' ' + directory_path
 subprocess.call(exiftool_command, shell='True')
 
 
