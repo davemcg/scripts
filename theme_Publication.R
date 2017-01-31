@@ -20,7 +20,7 @@ theme_Publication <- function(base_size=14, base_family="Helvetica") {
                legend.position = "bottom",
                legend.direction = "horizontal",
                legend.key.size= unit(0.2, "cm"),
-               legend.spacing = unit(0.5, "cm"),
+               legend.spacing = unit(0.2, "cm"),
                legend.title = element_text(face="italic"),
                plot.margin=unit(c(10,5,5,5),"mm"),
                strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
