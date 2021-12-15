@@ -32,9 +32,9 @@ for line in file_name:
 		# making it more complicated would take WAY more code
 		# 
 		# if there are any AC_Hom, then the variant gets labelled as 0/0
-		if int([x for x in info if 'AC_Hom' in x][0].split('=')[1].split(',')[0]) > 0:
-			line.append('0/0')
+#		if int([x for x in info if 'AC_Hom' in x][0].split('=')[1].split(',')[0]) > 0:
+#			line.append('0/0')
 		# otherwise, gets called a het (0/1)
-		else:
-			line.append('0/1')
+#		else:
+		line.append('0/1')
 		print('\t'.join(line))
