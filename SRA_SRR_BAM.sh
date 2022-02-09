@@ -1,4 +1,6 @@
 #!/bin/bash
+# Example: SRA_SRR_BAM.sh SRR10759485
+# downloads orig 10X bam, then renames to SRR10759485.bam
 
 SRR=$1
 
