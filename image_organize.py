@@ -1,5 +1,4 @@
-#!/usr/local/bin/python3
-
+#!/opt/homebrew/Caskroom/miniconda/base/bin/python
 
 import argparse
 import subprocess
